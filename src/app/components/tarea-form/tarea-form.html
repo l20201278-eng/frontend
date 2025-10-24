@@ -1,0 +1,62 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            
+            <h2 class="mb-4">{{ modoEdicion ? 'Actualizar' : 'Crear' }} Tarea</h2>
+
+            <form #tareaForm="ngForm" (ngSubmit)="guardarTarea()">
+                
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="titulo" 
+                        name="titulo"
+                        [(ngModel)]="tarea.titulo"
+                        required
+                        minlength="3"
+                        #titulo="ngModel"> <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="text-danger">
+                        <div *ngIf="titulo.errors?.['required']">
+                            El título es obligatorio.
+                        </div>
+                        <div *ngIf="titulo.errors?.['minlength']">
+                            El título debe tener al menos 3 caracteres.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción (Opcional)</label>
+                    <textarea 
+                        class="form-control" 
+                        id="descripcion" 
+                        name="descripcion"
+                        [(ngModel)]="tarea.descripcion">
+                    </textarea>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="completada" 
+                        name="completada"
+                        [(ngModel)]="tarea.completada">
+                    <label class="form-check-label" for="completada">Completada</label>
+                </div>
+
+                <div>
+                    <button 
+                        type="submit" 
+                        class="btn btn-success me-2" 
+                        [disabled]="tareaForm.invalid">
+                        {{ modoEdicion ? 'Actualizar' : 'Crear' }} Tarea
+                    </button>
+                    <a [routerLink]="['/']" class="btn btn-secondary">Cancelar</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,59 +1,85 @@
-# Frontend
+# 🚀 Gestor de Tareas Full-Stack
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+Este es un proyecto completo de gestión de tareas desarrollado utilizando la arquitectura Full-Stack, con **Angular** en el Frontend y **Spring Boot** en el Backend.
 
-## Development server
+La aplicación permite a los usuarios crear, leer, actualizar y eliminar (CRUD) tareas, demostrando una integración exitosa entre dos de los frameworks más populares para el desarrollo web moderno.
 
-To start a local development server, run:
+## 🛠️ Tecnologías Utilizadas
 
-```bash
-ng serve
-```
+| Componente | Tecnología | Versión / Tipo | Descripción |
+| :--- | :--- | :--- | :--- |
+| **Frontend** | Angular | 17+ | Interfaz de usuario dinámica. |
+| **Backend** | Spring Boot | 3.x | API RESTful que gestiona la lógica de negocio. |
+| **Persistencia** | Spring Data JPA | - | Capa de acceso a datos y ORM. |
+| **Base de Datos** | H2 Database | (Embedded) | Base de datos en memoria para el desarrollo y pruebas. |
+| **Build Tool** | Maven (mgn) | - | Gestión de dependencias y compilación del Backend. |
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 📋 Estructura del Proyecto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+El proyecto está dividido en dos carpetas principales:
 
-```bash
-ng generate component component-name
-```
+1.  **`frontend/`**: Contiene la aplicación Angular.
+    * **`tarea.ts`**: Modelo de datos de la tarea.
+    * **`tarea.service.ts`**: Lógica de comunicación HTTP con la API de Spring Boot.
+    * **`app.componentes/`**: Vistas y lógica del lado del cliente.
+2.  **`backend-spring/`**: Contiene la API REST de Spring Boot.
+    * **`Tarea.java`**: Entidad JPA para el modelo de datos.
+    * **`TareaRepository.java`**: Interfaz de Spring Data para el acceso a la base de datos.
+    * **`TareaController.java`**: Controlador REST que define los endpoints `/api/tareas`.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## ⚙️ Configuración y Ejecución Local
 
-## Building
+Para levantar la aplicación completa, sigue estos dos pasos en dos terminales separadas.
 
-To build the project run:
+### 1. Iniciar el Backend (Spring Boot)
 
-```bash
-ng build
-```
+El backend expone la API en el puerto `8082`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+1.  Abre la primera terminal y navega a la carpeta del backend:
+    ```bash
+    cd backend-spring
+    ```
+2.  Ejecuta la aplicación Spring Boot con Maven:
+    ```bash
+    mvn spring-boot:run
+    ```
+    *(Espera hasta ver el mensaje: "Tomcat started on port 8082")*
 
-## Running unit tests
+### 2. Iniciar el Frontend (Angular)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+El frontend se conecta al backend en `8082` y corre en el puerto `4200`.
 
-```bash
-ng test
-```
+1.  Abre la segunda terminal y navega a la carpeta del frontend:
+    ```bash
+    cd frontend
+    ```
+2.  Ejecuta el servidor de desarrollo de Angular:
+    ```bash
+    ng serve
+    ```
 
-## Running end-to-end tests
+### 3. Acceder a la Aplicación
 
-For end-to-end (e2e) testing, run:
+Una vez que ambos servidores estén activos, abre tu navegador y accede a:
 
-```bash
-ng e2e
-```
+[http://localhost:4200](http://localhost:4200)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 💡 Endpoints de la API (Backend)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Todos los endpoints se encuentran bajo la ruta base `http://localhost:8082/api/tareas`.
+
+| Método | Ruta | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/api/tareas` | Obtiene la lista completa de tareas. |
+| `GET` | `/api/tareas/{id}` | Obtiene una tarea por su ID. |
+| `POST` | `/api/tareas` | Crea una nueva tarea (Body: Tarea JSON). |
+| `PUT` | `/api/tareas/{id}` | Actualiza una tarea existente. |
+| `DELETE`| `/api/tareas/{id}` | Elimina una tarea por su ID. |
+
+*(Nota: Se implementó la configuración **CORS** en el `TareaController.java` para permitir peticiones desde el origen `http://localhost:4200`)*.
